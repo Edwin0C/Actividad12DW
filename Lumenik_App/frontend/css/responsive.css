@@ -1,0 +1,378 @@
+/**
+ * responsive.css - Media Queries para Responsive Design
+ */
+
+/* ===== MOBILE FIRST (< 640px) ===== */
+
+@media (max-width: 640px) {
+    /* Tipografía */
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    /* Navegación */
+    nav {
+        padding: 0.75rem;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    /* Grid */
+    .grid-responsive {
+        grid-template-columns: 1fr;
+    }
+
+    /* Tabla */
+    table {
+        font-size: 0.875rem;
+    }
+
+    th, td {
+        padding: 0.5rem !important;
+    }
+
+    /* Modales */
+    .modal {
+        padding: 0;
+    }
+
+    .modal-content {
+        border-radius: 0;
+        max-height: 90vh;
+    }
+
+    /* Botones */
+    button {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    /* Inputs */
+    input, textarea, select {
+        font-size: 16px; /* Previene zoom en iOS */
+    }
+
+    /* Margen */
+    .px-4 {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+
+    /* Flexbox */
+    .flex {
+        flex-direction: column;
+    }
+
+    .flex-between {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    /* Cards */
+    .card {
+        padding: 1rem;
+    }
+
+    /* Sidebar (oculto en móvil) */
+    .sidebar {
+        display: none;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        display: block;
+    }
+
+    /* Notification */
+    .notification {
+        right: 10px;
+        left: 10px;
+        width: auto;
+    }
+}
+
+/* ===== TABLET (640px - 1024px) ===== */
+
+@media (min-width: 640px) and (max-width: 1024px) {
+    /* Grid */
+    .grid-responsive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Tabla */
+    table {
+        font-size: 0.9rem;
+    }
+
+    /* Botones */
+    button {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 200px;
+    }
+
+    /* Contenedor */
+    .container {
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    /* Modal */
+    .modal-content {
+        max-width: 90vw;
+    }
+}
+
+/* ===== DESKTOP (> 1024px) ===== */
+
+@media (min-width: 1024px) {
+    /* Grid */
+    .grid-responsive {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Tabla */
+    table {
+        font-size: 1rem;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 250px;
+        position: fixed;
+        left: 0;
+        top: 60px;
+        height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
+
+    /* Main Content */
+    .main-content {
+        margin-left: 250px;
+    }
+
+    /* Modal */
+    .modal-content {
+        max-width: 600px;
+    }
+
+    /* Tooltip */
+    .tooltip::after {
+        opacity: 0;
+    }
+
+    .tooltip:hover::after {
+        opacity: 1;
+    }
+}
+
+/* ===== ULTRA-WIDE (> 1920px) ===== */
+
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1536px;
+        margin: 0 auto;
+    }
+
+    .grid-responsive {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ===== ORIENTACIÓN ===== */
+
+/* Landscape */
+@media (orientation: landscape) and (max-height: 500px) {
+    nav {
+        padding: 0.5rem 1rem;
+    }
+
+    h1 {
+        font-size: 1.25rem;
+    }
+
+    button {
+        padding: 0.25rem 0.75rem;
+    }
+}
+
+/* Portrait */
+@media (orientation: portrait) {
+    /* Optimizaciones para portrait */
+}
+
+/* ===== IMPRESIÓN ===== */
+
+@media print {
+    nav, .sidebar, .btn-logout {
+        display: none;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .card {
+        page-break-inside: avoid;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+}
+
+/* ===== TEMA OSCURO (si lo soporta el dispositivo) ===== */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #0f172a;
+        color: #f3f4f6;
+    }
+
+    .card {
+        background-color: #1f2937;
+    }
+}
+
+/* ===== TEMA CLARO (si lo soporta el dispositivo) ===== */
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #f3f4f6;
+        color: #111827;
+    }
+
+    .card {
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* ===== REDUCCIÓN DE MOVIMIENTO ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== PANTALLA TÁCTIL ===== */
+
+@media (hover: none) and (pointer: coarse) {
+    /* Hacer botones más grandes para touch */
+    button {
+        min-height: 48px;
+        min-width: 48px;
+    }
+
+    /* Aumentar área de toque */
+    a {
+        padding: 0.5rem;
+    }
+
+    /* Deshabilitar hover states costosos */
+    .card:hover {
+        transform: none;
+    }
+}
+
+/* ===== SOPORTE A NOTCHES ===== */
+
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+        padding-top: max(1rem, env(safe-area-inset-top));
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+}
+
+/* ===== BREAKPOINTS PERSONALIZADOS ===== */
+
+/* Pequeño (sm) */
+@media (min-width: 576px) {
+    .sm\:block {
+        display: block;
+    }
+
+    .sm\:hidden {
+        display: none;
+    }
+}
+
+/* Medio (md) */
+@media (min-width: 768px) {
+    .md\:block {
+        display: block;
+    }
+
+    .md\:hidden {
+        display: none;
+    }
+
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Grande (lg) */
+@media (min-width: 992px) {
+    .lg\:block {
+        display: block;
+    }
+
+    .lg\:hidden {
+        display: none;
+    }
+
+    .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Extra Grande (xl) */
+@media (min-width: 1200px) {
+    .xl\:block {
+        display: block;
+    }
+
+    .xl\:hidden {
+        display: none;
+    }
+
+    .xl\:grid-cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 2xl */
+@media (min-width: 1400px) {
+    .2xl\:block {
+        display: block;
+    }
+
+    .2xl\:grid-cols-5 {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}

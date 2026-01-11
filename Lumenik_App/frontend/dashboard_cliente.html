@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lümenik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div id="cliente-app" class="min-h-screen">
+        <!-- Barra Superior -->
+        <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+                     LÜMENIK 
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <span id="usuario-nombre" class="text-purple-400 font-semibold"></span>
+                    <button id="logout-btn" class="px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition">
+                        Salir
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Bienvenida -->
+            <div class="bg-gradient-to-r from-purple-900 to-pink-900 rounded-lg p-8 mb-8 shadow-lg">
+                <h2 class="text-3xl font-bold mb-2">¡Bienvenido a Lümenik!</h2>
+                <p class="text-gray-200">Selecciona los juegos que deseas instalar en tu consola</p>
+            </div>
+
+            <!-- Selector de Consola -->
+            <div class="bg-gray-800 rounded-lg p-6 mb-8 shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Selecciona tu Consola</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button class="consola-btn p-4 rounded-lg bg-gray-700 hover:bg-purple-600 transition font-bold" data-consola="PSP">
+                        🎮 PSP
+                    </button>
+                    <button class="consola-btn p-4 rounded-lg bg-gray-700 hover:bg-purple-600 transition font-bold" data-consola="PS2">
+                        🎮 PS2
+                    </button>
+                    <button class="consola-btn p-4 rounded-lg bg-gray-700 hover:bg-purple-600 transition font-bold" data-consola="PS3">
+                        🎮 PS3
+                    </button>
+                    <button class="consola-btn p-4 rounded-lg bg-gray-700 hover:bg-purple-600 transition font-bold" data-consola="PS4">
+                        🎮 PS4
+                    </button>
+                </div>
+            </div>
+
+            <!-- Información de Espacio -->
+            <div class="bg-gray-800 rounded-lg p-4 mb-6 shadow-lg" id="contenedor-espacio">
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold mb-2">📱 Espacio Disponible en tu Dispositivo</label>
+                    <select id="espacio-total" class="w-full px-4 py-2 bg-gray-700 rounded border border-gray-600 focus:border-purple-500 focus:outline-none text-white">
+                        <option value="">-- Selecciona el espacio disponible --</option>
+                        <option value="2">2 GB</option>
+                        <option value="4">4 GB</option>
+                        <option value="8">8 GB</option>
+                        <option value="16">16 GB</option>
+                        <option value="32">32 GB</option>
+                        <option value="64">64 GB</option>
+                        <option value="120">120 GB</option>
+                        <option value="128">128 GB</option>
+                        <option value="160">160 GB</option>
+                        <option value="256">256 GB</option>
+                        <option value="512">512 GB</option>
+                        <option value="1024">1 TB (1024 GB)</option>
+                        <option value="2048">2 TB (2048 GB)</option>
+                    </select>
+                </div>
+                <div id="alerta-espacio-superado" class="hidden mb-4 bg-red-900 bg-opacity-50 border-l-4 border-red-500 p-3 rounded">
+                </div>
+                <div id="resumen-solicitud" class="mb-4 bg-blue-900 bg-opacity-30 border-l-4 border-blue-400 p-3 rounded hidden">
+                    <p class="text-sm text-blue-300"><strong>📋 Resumen actual:</strong> <span id="resumen-text"></span></p>
+                </div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-semibold">Espacio Usado:</span>
+                    <span class="text-lg font-bold text-purple-400"><span id="gb-usado">0</span> GB / <span id="gb-total">-</span> GB</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                    <div id="barra-progreso" class="bg-gradient-to-r from-purple-500 to-pink-600 h-full" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Catálogo de Juegos -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Catálogo de Juegos</h3>
+                
+                <!-- Búsqueda y Ordenamiento -->
+                <div class="mb-4 flex gap-4">
+                    <div class="flex-1 relative">
+                        <input type="text" id="buscar-juego" placeholder="🔍 Buscar juego..." class="w-full px-4 py-2 pl-10 bg-gray-700 rounded border border-gray-600 focus:border-purple-500 focus:outline-none text-white">
+                        <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+                    </div>
+                    <select id="ordenar-juegos" class="px-4 py-2 bg-gray-700 rounded border border-gray-600 focus:border-purple-500 focus:outline-none text-white min-w-max">
+                        <option value="nuevo">Lo más nuevo</option>
+                        <option value="peso-menor">Menos pesado</option>
+                        <option value="peso-mayor">Más pesado</option>
+                        <option value="alfabetico">Orden alfabético</option>
+                    </select>
+                </div>
+                
+                <!-- Grid de Juegos -->
+                <div id="juegos-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    <!-- Los juegos se cargarán aquí con JavaScript -->
+                </div>
+                
+                <!-- Paginación -->
+                <div id="paginacion-container" class="mt-6 flex justify-center items-center gap-4">
+                    <button id="pagina-anterior" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        ⬅️ Anterior
+                    </button>
+                    <span id="info-paginacion" class="text-sm text-gray-400">Página 1</span>
+                    <button id="pagina-siguiente" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        Siguiente ➡️
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botón de Solicitud -->
+            <div class="mt-8 flex gap-4">
+                <button id="solicitar-btn" disabled class="flex-1 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:from-purple-700 hover:to-pink-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    Solicitar Instalación
+                </button>
+                <button id="limpiar-btn" class="flex-1 py-3 bg-gray-700 rounded-lg font-bold hover:bg-gray-600 transition">
+                    Limpiar Selección
+                </button>
+            </div>
+
+            <!-- Historial de Servicios -->
+            <div class="mt-12 bg-gray-800 rounded-lg p-6 shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Mi Historial de Servicios</h3>
+                <div id="historial-container" class="space-y-4">
+                    <!-- Historial se cargará aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utilidades.js"></script>
+    <script src="js/autenticacion.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/cliente_dashboard.js"></script>
+</body>
+</html>

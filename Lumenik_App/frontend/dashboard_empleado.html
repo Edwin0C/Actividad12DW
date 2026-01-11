@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Empleado - Lümenik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div id="empleado-app" class="min-h-screen">
+        <!-- Barra Superior -->
+        <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+                    LÜMENIK
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <span id="usuario-nombre" class="text-purple-400 font-semibold"></span>
+                    <button id="logout-btn" class="px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition">
+                        Salir
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Tabs de Navegación -->
+            <div class="flex gap-4 mb-8 border-b border-gray-700">
+                <button class="tab-btn py-2 px-4 font-bold border-b-2 border-transparent hover:border-purple-500 transition" data-tab="clientes">
+                    Mis Clientes
+                </button>
+                <button class="tab-btn py-2 px-4 font-bold border-b-2 border-transparent hover:border-purple-500 transition" data-tab="trabajos">
+                    Trabajos Pendientes
+                </button>
+                <button class="tab-btn py-2 px-4 font-bold border-b-2 border-transparent hover:border-purple-500 transition" data-tab="historial">
+                    Historial de Trabajos
+                </button>
+            </div>
+
+            <!-- TAB: Mis Clientes -->
+            <div id="clientes-tab" class="tab-content">
+                <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">Mis Clientes</h2>
+                    <div id="clientes-tabla" class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-700">
+                                <tr>
+                                    <th class="px-4 py-2">Nombre</th>
+                                    <th class="px-4 py-2">Teléfono</th>
+                                    <th class="px-4 py-2">Dirección</th>
+                                    <th class="px-4 py-2">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientes-list" class="divide-y divide-gray-700">
+                                <!-- Los clientes se cargarán aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: Trabajos Pendientes -->
+            <div id="trabajos-tab" class="tab-content hidden">
+                <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">Trabajos Pendientes</h2>
+                    <div id="trabajos-pendientes" class="space-y-4">
+                        <!-- Los trabajos pendientes se cargarán aquí -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: Historial de Trabajos -->
+            <div id="historial-tab" class="tab-content hidden">
+                <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">Historial de Trabajos</h2>
+                    <div id="historial-trabajos" class="space-y-4">
+                        <!-- El historial se cargará aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para Registrar Trabajo -->
+        <div id="modal-trabajo" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+            <div class="bg-gray-800 rounded-lg p-6 w-full max-w-2xl max-h-96 overflow-y-auto">
+                <h3 class="text-2xl font-bold mb-4">Registrar Nuevo Trabajo</h3>
+                
+                <form id="form-trabajo" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Tipo de Servicio</label>
+                            <select id="tipo-servicio" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded" required>
+                                <option value="">Selecciona...</option>
+                                <option value="instalacion">Instalación</option>
+                                <option value="descarga">Descarga</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Costo (COP)</label>
+                            <input type="number" id="costo" placeholder="Ingresa el costo" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Descripción del Trabajo</label>
+                        <textarea id="descripcion-trabajo" placeholder="Describe el trabajo realizado..." rows="3" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Juegos Instalados</label>
+                        <div id="juegos-checklist" class="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto">
+                            <!-- Los juegos se cargarán aquí -->
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button type="submit" class="flex-1 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded font-bold hover:from-purple-700 hover:to-pink-700 transition">
+                            Guardar Registro
+                        </button>
+                        <button type="button" id="cerrar-modal" class="flex-1 py-2 bg-gray-700 rounded font-bold hover:bg-gray-600 transition">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utilidades.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/autenticacion.js"></script>
+    <script src="js/empleado_dashboard.js"></script>
+</body>
+</html>
